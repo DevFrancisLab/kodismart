@@ -3,6 +3,7 @@ import Sidebar from "@/components/dashboard/Sidebar";
 import TopBar from "@/components/dashboard/TopBar";
 import DashboardOverview from "@/components/dashboard/DashboardOverview";
 import RoomsTab from "@/components/dashboard/RoomsTab";
+import RoomsGrid from "@/components/dashboard/RoomsGrid";
 import TenantsTab from "@/components/dashboard/TenantsTab";
 import PaymentsTab from "@/components/dashboard/PaymentsTab";
 import MaintenanceTab from "@/components/dashboard/MaintenanceTab";
