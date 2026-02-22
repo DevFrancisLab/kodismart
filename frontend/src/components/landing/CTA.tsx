@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
-const CTA = () => (
+const CTA = () => {
+  const navigate = useNavigate();
+  return (
   <section className="py-20 md:py-28">
     <div className="container mx-auto px-4">
       <div className="relative rounded-3xl overflow-hidden bg-primary px-8 py-16 md:py-20 text-center">
@@ -20,6 +23,7 @@ const CTA = () => (
             size="lg"
             variant="secondary"
             className="gap-2 text-base px-8"
+            onClick={() => navigate("/dashboard")}
           >
             Get Started Free <ArrowRight size={18} />
           </Button>
@@ -27,6 +31,7 @@ const CTA = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default CTA;

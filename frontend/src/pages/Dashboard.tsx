@@ -7,6 +7,8 @@ import TenantsTab from "@/components/dashboard/TenantsTab";
 import PaymentsTab from "@/components/dashboard/PaymentsTab";
 import MaintenanceTab from "@/components/dashboard/MaintenanceTab";
 import ReportsTab from "@/components/dashboard/ReportsTab";
+import LeaseManagementTab from "@/components/dashboard/LeaseManagementTab";
+import SettingsTab from "@/components/dashboard/SettingsTab";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -23,6 +25,10 @@ const Dashboard = () => {
         return <PaymentsTab />;
       case "maintenance":
         return <MaintenanceTab />;
+      case "lease":
+        return <LeaseManagementTab />;
+      case "settings":
+        return <SettingsTab />;
       case "reports":
         return <ReportsTab />;
       default:

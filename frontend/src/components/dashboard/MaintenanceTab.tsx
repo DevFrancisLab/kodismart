@@ -1,93 +1,25 @@
-import { Plus, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+
+const statusOptions = ["Pending", "In Progress", "Completed"];
+const priorityColors = {
+  Critical: "bg-red-100 text-red-700",
+  High: "bg-orange-100 text-orange-700",
+  Medium: "bg-blue-100 text-blue-700",
+  Low: "bg-green-100 text-green-700",
+};
 
 const MaintenanceTab = () => {
-  const requests = [
-    {
-      id: 1,
-      title: "Leaking tap in bathroom",
-      room: "1A",
-      tenant: "Alice Kipchoge",
-      priority: "High",
-      status: "In Progress",
-      submittedDate: "Feb 20, 2024",
-      dueDate: "Feb 23, 2024",
-      description: "The main bathroom tap is leaking water constantly.",
-    },
-    {
-      id: 2,
-      title: "Door lock not working",
-      room: "2B",
-      tenant: "Carol Kipchoge",
-      priority: "Critical",
-      status: "Pending",
-      submittedDate: "Feb 22, 2024",
-      dueDate: "Feb 24, 2024",
-      description: "Main door lock is jammed and cannot be opened.",
-    },
-    {
-      id: 3,
-      title: "Paint touch-up needed",
-      room: "1B",
-      tenant: "Bob Kamau",
-      priority: "Low",
-      status: "Pending",
-      submittedDate: "Feb 15, 2024",
-      dueDate: "Mar 05, 2024",
-      description: "Wall has some scuff marks that need paint touch-up.",
-    },
-    {
-      id: 4,
-      title: "Electrical outlet not working",
-      room: "3A",
-      tenant: "David Kipchoge",
-      priority: "High",
-      status: "Completed",
-      submittedDate: "Feb 10, 2024",
-      dueDate: "Feb 15, 2024",
-      description: "One outlet in the living room is not functioning.",
-    },
-  ];
+  const [requests, setRequests] = useState([
+    { id: 1, requestId: "MR-001", tenant: "Alice Kipchoge", room: "1A", issue: "Leaking tap in bathroom", priority: "High", status: "In Progress", submittedDate: "Feb 20, 2024" },
+    { id: 2, requestId: "MR-002", tenant: "Carol Kipchoge", room: "2B", issue: "Door lock not working", priority: "Critical", status: "Pending", submittedDate: "Feb 22, 2024" },
+    { id: 3, requestId: "MR-003", tenant: "Bob Kamau", room: "1B", issue: "Paint touch-up needed", priority: "Low", status: "Pending", submittedDate: "Feb 15, 2024" },
+    { id: 4, requestId: "MR-004", tenant: "David Kipchoge", room: "3A", issue: "Electrical outlet not working", priority: "High", status: "Completed", submittedDate: "Feb 10, 2024" },
+  ]);
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "Critical":
-        return "bg-red-100 text-red-700";
-      case "High":
-        return "bg-orange-100 text-orange-700";
-      case "Medium":
-        return "bg-blue-100 text-blue-700";
-      case "Low":
-        return "bg-green-100 text-green-700";
-      default:
-        return "bg-gray-100 text-gray-700";
-    }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "Completed":
-        return <CheckCircle size={16} className="text-green-600" />;
-      case "In Progress":
-        return <Clock size={16} className="text-blue-600" />;
-      case "Pending":
-        return <AlertCircle size={16} className="text-orange-600" />;
-      default:
-        return null;
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Completed":
-        return "bg-green-100 text-green-700";
-      case "In Progress":
-        return "bg-blue-100 text-blue-700";
-      case "Pending":
-        return "bg-orange-100 text-orange-700";
-      default:
-        return "bg-gray-100 text-gray-700";
-    }
+  const handleStatusChange = (id: number, status: string) => {
+    setRequests((prev) => prev.map((r) => r.id === id ? { ...r, status } : r));
   };
 
   return (
@@ -102,76 +34,54 @@ const MaintenanceTab = () => {
         </Button>
       </div>
 
-      {/* Status Summary */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <div className="bg-card border border-border rounded-xl p-4 text-center">
-          <p className="text-2xl font-bold text-foreground">4</p>
-          <p className="text-xs text-muted-foreground">Total Requests</p>
-        </div>
-        <div className="bg-card border border-border rounded-xl p-4 text-center">
-          <p className="text-2xl font-bold text-orange-600">2</p>
-          <p className="text-xs text-muted-foreground">Pending</p>
-        </div>
-        <div className="bg-card border border-border rounded-xl p-4 text-center">
-          <p className="text-2xl font-bold text-blue-600">1</p>
-          <p className="text-xs text-muted-foreground">In Progress</p>
-        </div>
-        <div className="bg-card border border-border rounded-xl p-4 text-center">
-          <p className="text-2xl font-bold text-green-600">1</p>
-          <p className="text-xs text-muted-foreground">Completed</p>
-        </div>
-      </div>
-
-      {/* Requests Cards */}
-      <div className="grid grid-cols-1 gap-6">
-        {requests.map((request) => (
-          <div key={request.id} className="bg-card border border-border rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-shadow">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-foreground mb-2">{request.title}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{request.description}</p>
-                <div className="flex flex-wrap gap-3">
-                  <span className="text-xs">
-                    <span className="text-muted-foreground">Room:</span>{" "}
-                    <span className="font-medium text-foreground">{request.room}</span>
-                  </span>
-                  <span className="text-xs">
-                    <span className="text-muted-foreground">Tenant:</span>{" "}
-                    <span className="font-medium text-foreground">{request.tenant}</span>
-                  </span>
-                </div>
-              </div>
-              <div className="flex gap-2 flex-wrap sm:flex-col sm:items-end">
-                <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${getPriorityColor(request.priority)}`}>
-                  {request.priority}
-                </span>
-                <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(request.status)}`}>
-                  {getStatusIcon(request.status)} {request.status}
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-border">
-              <div>
-                <p className="text-xs text-muted-foreground mb-1">Submitted</p>
-                <p className="text-sm font-medium text-foreground">{request.submittedDate}</p>
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground mb-1">Due Date</p>
-                <p className="text-sm font-medium text-foreground">{request.dueDate}</p>
-              </div>
-              <button className="sm:col-span-1 px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors text-sm font-medium">
-                Update
-              </button>
-              <button className="sm:col-span-1 px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted transition-colors text-sm font-medium">
-                Details
-              </button>
-            </div>
-          </div>
-        ))}
+      {/* Requests Table */}
+      <div className="bg-card border border-border rounded-2xl shadow-card overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-border bg-muted/30">
+              <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Request ID</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Tenant Name</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Room Number</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Issue Type</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Date Submitted</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Priority</th>
+              <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Status</th>
+              <th className="px-6 py-4 text-right text-sm font-semibold text-foreground">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {requests.map((request) => (
+              <tr key={request.id} className="border-b border-border hover:bg-muted/20 transition-colors">
+                <td className="px-6 py-4 font-medium text-primary">{request.requestId}</td>
+                <td className="px-6 py-4 text-sm text-foreground">{request.tenant}</td>
+                <td className="px-6 py-4 text-sm text-muted-foreground">{request.room}</td>
+                <td className="px-6 py-4 text-sm text-foreground">{request.issue}</td>
+                <td className="px-6 py-4 text-sm text-muted-foreground">{request.submittedDate}</td>
+                <td className="px-6 py-4">
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${priorityColors[request.priority]}`}>{request.priority}</span>
+                </td>
+                <td className="px-6 py-4">
+                  <select
+                    value={request.status}
+                    onChange={e => handleStatusChange(request.id, e.target.value)}
+                    className="px-3 py-1 rounded-full text-xs font-semibold bg-muted border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+                  >
+                    {statusOptions.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </td>
+                <td className="px-6 py-4 text-right">
+                  <Button size="sm" variant="outline">
+                    Assign Vendor
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 };
 
 export default MaintenanceTab;
+

@@ -208,7 +208,7 @@ const DashboardOverview = () => {
                     border: "1px solid hsl(220 14% 90%)",
                     borderRadius: "0.75rem",
                   }}
-                  formatter={(value) => `KES ${(value / 1000000).toFixed(1)}M`}
+                  formatter={(value: number) => `KES ${(value / 1000000).toFixed(1)}M`}
                 />
                 <Legend />
                 <Line

@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroDashboard from "@/assets/hero-dashboard.png";
 
-const Hero = () => (
+const Hero = () => {
+  const navigate = useNavigate();
+  return (
   <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
     {/* Background gradient blob */}
     <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
@@ -22,7 +25,7 @@ const Hero = () => (
             KodiSmart simplifies rent collection, tenant tracking, and maintenance requests — all from one beautiful dashboard built for Kenyan landlords.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Button size="lg" className="gap-2 text-base px-8">
+            <Button size="lg" className="gap-2 text-base px-8" onClick={() => navigate("/dashboard")}>
               Get Started <ArrowRight size={18} />
             </Button>
             <Button size="lg" variant="outline" className="text-base px-8">
@@ -43,6 +46,7 @@ const Hero = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default Hero;

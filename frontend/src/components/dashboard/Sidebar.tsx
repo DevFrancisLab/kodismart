@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Menu, X, LayoutDashboard, Home, Users, DollarSign, Wrench, BarChart3 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Menu, X, LayoutDashboard, Home, Users, DollarSign, Wrench, BarChart3, FileText, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface SidebarProps {
@@ -9,6 +10,7 @@ interface SidebarProps {
 
 const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -16,6 +18,8 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
     { id: "tenants", label: "Tenants", icon: Users },
     { id: "payments", label: "Payments", icon: DollarSign },
     { id: "maintenance", label: "Maintenance", icon: Wrench },
+    { id: "lease", label: "Lease Management", icon: FileText },
+    { id: "settings", label: "Settings", icon: Settings },
     { id: "reports", label: "Reports", icon: BarChart3 },
   ];
 
@@ -88,7 +92,7 @@ const Sidebar = ({ activeTab, onTabChange }: SidebarProps) => {
 
         {/* Footer */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-card">
-          <Button size="sm" variant="outline" className="w-full">
+          <Button size="sm" variant="outline" className="w-full" onClick={() => navigate("/")}>
             Sign Out
           </Button>
         </div>

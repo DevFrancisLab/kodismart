@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
@@ -20,8 +22,7 @@ const Navbar = () => {
           <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Features</a>
           <a href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
           <a href="#testimonials" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Testimonials</a>
-          <a href="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Dashboard</a>
-          <Button size="sm">Get Started</Button>
+          <Button size="sm" onClick={() => navigate("/dashboard")}>Get Started</Button>
         </div>
 
         {/* Mobile toggle */}
@@ -36,8 +37,7 @@ const Navbar = () => {
           <a href="#features" className="block text-sm font-medium text-muted-foreground" onClick={() => setOpen(false)}>Features</a>
           <a href="#how-it-works" className="block text-sm font-medium text-muted-foreground" onClick={() => setOpen(false)}>How It Works</a>
           <a href="#testimonials" className="block text-sm font-medium text-muted-foreground" onClick={() => setOpen(false)}>Testimonials</a>
-          <a href="/dashboard" className="block text-sm font-medium text-muted-foreground" onClick={() => setOpen(false)}>Dashboard</a>
-          <Button size="sm" className="w-full">Get Started</Button>
+          <Button size="sm" className="w-full" onClick={() => { navigate("/dashboard"); setOpen(false); }}>Get Started</Button>
         </div>
       )}
     </nav>
